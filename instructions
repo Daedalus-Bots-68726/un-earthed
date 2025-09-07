@@ -17,3 +17,6 @@ git commit -m "random stuff" (the message is not required, just dont put -m if y
 git push (if there is an error read it, and try to fix it or put it in google)
 
 
+to run your code use this command: un-earthed % pybricksdev run ble run3.py
+
+
