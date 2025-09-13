@@ -1,12 +1,12 @@
 def color():
     # Main loop to detect and print color
     while True:
-        detected_color = sensor.color()
+        detected = sensor.color()
+        reflection = sensor.reflection()  # Brightness 0–100
 
-        if detected_color is None:
-            print("No color detected")
-        else:
-            print("Detected color:", detected_color)
+        if reflection < 15:
+            detected="Color.BLACK"
 
-        wait(500)
-        # Wait 500 ms between readings
+        print("Detected:", detected, "| Reflection:", reflection)
+
+        wait(1000)
