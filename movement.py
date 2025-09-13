@@ -6,11 +6,22 @@ from pybricks.tools import wait
 hub = PrimeHub()
 left = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 right = Motor(Port.E)
+motor_a = Motor(Port.D)
 
 WHEEL_CIRCUMFERENCE_IN = 10.86614
 
-def move(distance_in, speed=300, kp=3, ki=0.05, kd=0.4, tolerance=5):
+def move(distance_in, speed=300):
     degrees_to_run = (distance_in / WHEEL_CIRCUMFERENCE_IN) * 360
+    kp = max(1.0, 6.0 - speed / 150)
+
+    # Integral: tiny at high speeds
+    ki = max(0.01, 0.1 - speed / 4000)
+
+    # Derivative: grows with speed for stability
+    kd = 0.2 + speed / 1000
+
+    # Tolerance: larger at higher speed
+    tolerance = max(2, speed // 80)
     hub.imu.reset_heading(0)
     left.reset_angle(0)
     right.reset_angle(0)
@@ -113,3 +124,8 @@ def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=2):
 
     left.hold()
     right.hold()
+
+def motor(direction, speed, time):
+    speed = direction * speed
+    motor_a.run_time(speed, time * 1000)
+
