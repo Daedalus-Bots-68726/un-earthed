@@ -6,7 +6,7 @@ from pybricks.tools import wait
 hub = PrimeHub()
 left = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 right = Motor(Port.E)
-motor_a = Motor(Port.D)
+motor_a = Motor(Port.B)
 
 WHEEL_CIRCUMFERENCE_IN = 10.86614
 
@@ -100,6 +100,7 @@ def move_backwards(distance_in, speed=300, kp=3, ki=0.05, kd=0.4, tolerance=5):
 
 
 def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=2):
+    hub.imu.reset_heading()
     integral = 0
     last_error = 0
 
