@@ -1,6 +1,6 @@
 from pybricks.parameters import Button
 from pybricks.tools import wait
-import ship, redstickthing, gears, Amogh  # make sure your runs are in Code/ folder with __init__.py
+import ship, redstickthing, run1, Amogh  # make sure your runs are in Code/ folder with __init__.py
 from pybricks.hubs import PrimeHub
 
 # Amir khan List of run functions
