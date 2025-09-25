@@ -92,24 +92,41 @@ def move_backwards(distance_in, speed=300, kp=3, ki=0.05, kd=0.4, tolerance=5):
     left.hold()
     right.hold()
 
+def normalize_angle(angle):
+    """Wraps any angle into the range [-180, 180]."""
+    while angle > 180:
+        angle -= 360
+    while angle < -180:
+        angle += 360
+    return angle
 
 
-def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=2):
+def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=1):
     hub.imu.reset_heading(0)
     integral = 0
     last_error = 0
 
     while True:
-        error = target_angle - hub.imu.heading()
+        # Calculate error and normalize it
+        error = normalize_angle(target_angle - hub.imu.heading())
+
+        # Stop if close enough
         if abs(error) <= tolerance:
             break
 
+        # Integrate only when close (prevents runaway)
         if abs(error) < 15:
             integral += error
             integral = max(min(integral, 200), -200)
 
         derivative = error - last_error
         correction = kp * error + ki * integral + kd * derivative
+
+        # Scale down correction if we're close
+        if abs(error) < 10:
+            correction *= 0.3
+
+        # Limit correction
         correction = max(min(correction, speed), -speed)
 
         left.run(correction)
@@ -118,6 +135,7 @@ def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=2):
         last_error = error
         wait(10)
 
+    # Hold final position
     left.hold()
     right.hold()
 
