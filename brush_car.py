@@ -1,7 +1,7 @@
 from movement import *
 
 def run():
-    print("Running Mission 1...")
+    print("Running Mission 1***")
     turn(10.75)
     move(23)
     turn(-130)
