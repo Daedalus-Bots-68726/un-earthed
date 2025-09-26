@@ -4,7 +4,7 @@ import ship, run1, Amogh  # make sure your runs are in Code/ folder with __init_
 from pybricks.hubs import PrimeHub
 
 # Amir khan List of run functions
-runs = [run1.run, ship.run]
+runs = [run1.run, ship.run, Amogh.run]
 current_run = 0
 
 # Display initial selection
