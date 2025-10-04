@@ -31,5 +31,4 @@ def run():
     move(-0.75)
     turn(-100,100)
 
-run()
 
