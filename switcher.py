@@ -1,10 +1,10 @@
 from pybricks.parameters import Button
 from pybricks.tools import wait
-import ship, run1, Amogh  # make sure your runs are in Code/ folder with __init__.py
+import ship, run1, amogh2  # make sure your runs are in Code/ folder with __init__.py
 from pybricks.hubs import PrimeHub
 
 # Amir khan List of run functions
-runs = [run1.run, ship.run, Amogh.run]
+runs = [run1.run, ship.run, amogh2.run]
 current_run = 0
 
 # Display initial selection
