@@ -101,20 +101,17 @@ def normalize_angle(angle):
     return angle
 
 
-def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=1):
+def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=2):
     hub.imu.reset_heading(0)
     integral = 0
     last_error = 0
 
     while True:
-        # Calculate error and normalize it
         error = normalize_angle(target_angle - hub.imu.heading())
 
-        # Stop if close enough
         if abs(error) <= tolerance:
             break
 
-        # Integrate only when close (prevents runaway)
         if abs(error) < 15:
             integral += error
             integral = max(min(integral, 200), -200)
@@ -122,11 +119,14 @@ def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=1):
         derivative = error - last_error
         correction = kp * error + ki * integral + kd * derivative
 
-        # Scale down correction if we're close
+        # Scale down but not too much
         if abs(error) < 10:
-            correction *= 0.3
+            correction *= 0.6
 
-        # Limit correction
+        # Enforce min correction
+        if abs(correction) < 50:
+            correction = 50 if correction > 0 else -50
+
         correction = max(min(correction, speed), -speed)
 
         left.run(correction)
@@ -135,9 +135,9 @@ def turn(target_angle, speed=400, kp=4.5, ki=0.03, kd=0.6, tolerance=1):
         last_error = error
         wait(10)
 
-    # Hold final position
     left.hold()
     right.hold()
+
 
 def motor(direction, speed, time, motor):
     speed = direction * speed

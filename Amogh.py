@@ -11,4 +11,3 @@ def run():
     move_backwards(1)
     turn(20)
     move_backwards(39)
-run()
