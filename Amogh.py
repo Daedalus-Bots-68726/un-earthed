@@ -4,8 +4,8 @@ def run():
     move(17)
     turn(-147)
     for i in range(4):
-        motor(1,600,1.5, "b")
-        motor(-1,600,1.5, "b")
+        motor(1,600,1, "b")
+        motor(-1,600,1, "b")
     turn(130)
     move(10.5)
     turn(25)
@@ -21,4 +21,4 @@ def run():
     turn(-50)
     move(25)
     turn(30)
-    move(1000)
+    move(25)
