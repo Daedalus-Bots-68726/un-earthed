@@ -2,7 +2,7 @@ from movement import *
 
 def run():
     print("Running Mission 1...")
-    turn(3.66)
+    turn(2.5)
     motor(1, 86, 1, "d")
     move(25)
     move_backwards(10)
